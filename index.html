@@ -669,7 +669,7 @@ $('#present').addEventListener('click',()=>{
 });
 
 /* ---------- registro + envío a Google Sheets ---------- */
-const SHEET_URL=''; // pega aquí la URL de la app web de Google Apps Script
+const SHEET_URL='https://script.google.com/macros/s/AKfycbxh4sbXMJTe8eg8vcN7j2mOCli0rKfyZHT2BJILYTOCQEsu1glhlpJOY-nkMBA9UE1P/exec'; // pega aquí la URL de la app web de Google Apps Script
 let reg=null;try{reg=JSON.parse(localStorage.getItem('curso-reg')||'null')}catch(e){}
 function enviar(tipo,datos){
   if(!SHEET_URL)return;
