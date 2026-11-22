@@ -198,6 +198,19 @@ body.present .menu{display:none}
 @keyframes tap{0%,100%{transform:translate(0,0)}50%{transform:translate(-3px,-3px) scale(.9)}}
 .sp-h{margin-top:10px;font-size:13px;font-weight:700;color:#d4d4d4;border:1px solid var(--line);background:#141414;padding:8px 16px;border-radius:999px;animation:nudge 1.8s ease-in-out infinite}
 @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+#reg{position:fixed;inset:0;z-index:300;background:#000c;display:none;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+#reg.on{display:flex}
+#reg form{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;width:min(480px,100%);display:flex;flex-direction:column;gap:10px;margin:auto}
+#reg h2{font-size:22px;letter-spacing:-.02em}#reg p.s{color:var(--mut);font-size:14px}
+#reg label{font-size:13px;font-weight:700;color:var(--y);display:flex;flex-direction:column;gap:4px}
+#reg input,#reg textarea{background:#0A0A0A;border:1px solid var(--line);border-radius:10px;color:var(--t);padding:10px 12px;font:inherit;font-size:15px}
+#reg input:focus,#reg textarea:focus{outline:2px solid var(--p);border-color:var(--p)}
+#reg .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){#reg .g2{grid-template-columns:1fr}}
+#reg .chk{flex-direction:row;align-items:flex-start;gap:8px;font-weight:500;color:var(--mut);font-size:12.5px}
+#reg .chk input{margin-top:3px;accent-color:var(--y)}
+#reg .err{color:var(--bad);font-size:13px;min-height:16px}
 </style>
 </head>
 <body>
@@ -210,6 +223,17 @@ body.present .menu{display:none}
     <div class="sp-s">Marketing digital en acción: de la idea al negocio lanzado</div>
   </div>
 </div>
+<div id="reg" role="dialog" aria-label="Registro del estudiante"><form id="regf" novalidate>
+<h2>Antes de empezar</h2><p class="s">Regístrate para guardar tu avance en el curso.</p>
+<label>Nombre completo<input name="nombre" autocomplete="name" required></label>
+<div class="g2"><label>Cédula<input name="cedula" inputmode="numeric" required></label><label>Teléfono / WhatsApp<input name="telefono" inputmode="tel" autocomplete="tel" required></label></div>
+<label>Correo electrónico<input name="correo" type="email" autocomplete="email" required></label>
+<div class="g2"><label>Entidad (a cuál perteneces)<input name="entidad" placeholder="Ej. SENA, otra entidad" required></label><label>Grupo / ficha<input name="grupo" required></label></div>
+<label>Nota adicional (opcional)<textarea name="nota" rows="2"></textarea></label>
+<label class="chk"><input type="checkbox" name="acepto" required><span>Autorizo el tratamiento de mis datos personales por parte de Leonel Mercado con fines académicos y de seguimiento del curso (Ley 1581 de 2012).</span></label>
+<div class="err" id="regerr" role="alert"></div>
+<button class="btn y" type="submit">Guardar y entrar</button>
+</form></div>
 <div class="app">
   <aside class="side" id="side" aria-label="Ruta del curso">
     <button type="button" class="brand" id="home-brand" title="Volver a la pantalla de entrada" aria-label="Volver a la pantalla de entrada"><img class="ava" src="assets/leonel.gif" alt="Leonel Mercado"><div><b>Leonel Mercado</b><span>Docente · Marketing digital</span></div></button>
@@ -625,7 +649,7 @@ document.addEventListener('click',e=>{
   else if(t.dataset.copy){const el=document.getElementById(t.dataset.copy),txt=el.textContent;
     const done=()=>{const o=t.textContent;t.textContent='¡Copiado!';setTimeout(()=>t.textContent=o,1400)};
     try{navigator.clipboard.writeText(txt).then(done,()=>{sel(el);t.textContent='Selecciona y copia (Ctrl+C)'})}catch(err){sel(el);t.textContent='Selecciona y copia (Ctrl+C)'}}
-  else if(t.dataset.seen){const id=t.dataset.seen;if(seen[id])delete seen[id];else seen[id]=1;save();render(id)}
+  else if(t.dataset.seen){const id=t.dataset.seen;if(seen[id])delete seen[id];else seen[id]=1;save();render(id);enviarAvance(id)}
   else if(t.dataset.f!==undefined){funnelShow(+t.dataset.f)}
 });
 function sel(el){try{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}catch(e){}}
@@ -643,11 +667,35 @@ $('#present').addEventListener('click',()=>{
   $('#present').textContent=on?'Salir':'Presentar';
   try{if(on&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{});else if(!on&&document.fullscreenElement)document.exitFullscreen().catch(()=>{})}catch(e){}
 });
+
+/* ---------- registro + envío a Google Sheets ---------- */
+const SHEET_URL=''; // pega aquí la URL de la app web de Google Apps Script
+let reg=null;try{reg=JSON.parse(localStorage.getItem('curso-reg')||'null')}catch(e){}
+function enviar(tipo,datos){
+  if(!SHEET_URL)return;
+  try{fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({tipo,fecha:new Date().toISOString()},datos))}).catch(()=>{})}catch(e){}
+}
+function enviarAvance(id){
+  if(!reg)return;
+  enviar('avance',{cedula:reg.cedula,nombre:reg.nombre,modulo:TITLES[id]||id,visto:!!seen[id],pct:$('#pct').textContent});
+}
 buildNav();render(location.hash.slice(1)||'inicio');
 (function(){
   const sp=$('#splash');
   let ya=false;try{ya=sessionStorage.getItem('entro')==='1'}catch(e){}
   if(ya){sp.style.transition='none';sp.classList.add('out');void sp.offsetHeight;sp.style.transition=''}
+  const R=$('#reg'),F=$('#regf');
+  function pedirReg(){R.classList.add('on');setTimeout(()=>F.nombre.focus(),50)}
+  F.addEventListener('submit',e=>{
+    e.preventDefault();
+    const d=Object.fromEntries(new FormData(F));
+    const ok=['nombre','cedula','telefono','correo','entidad','grupo'].every(k=>(d[k]||'').trim());
+    if(!ok||!F.correo.validity.valid||!F.acepto.checked){$('#regerr').textContent=!F.acepto.checked&&ok?'Debes aceptar el tratamiento de datos.':'Completa todos los campos obligatorios con un correo válido.';return}
+    $('#regerr').textContent='';
+    delete d.acepto;Object.keys(d).forEach(k=>d[k]=d[k].trim());
+    reg=d;try{localStorage.setItem('curso-reg',JSON.stringify(d))}catch(e){}
+    enviar('registro',d);R.classList.remove('on');entrar();
+  });
   function entrar(){
     sp.classList.add('out');document.body.classList.remove('open');
     try{sessionStorage.setItem('entro','1')}catch(e){}
@@ -657,7 +705,7 @@ buildNav();render(location.hash.slice(1)||'inicio');
     try{sessionStorage.removeItem('entro')}catch(e){}
     setTimeout(()=>$('#enter').focus(),50);
   }
-  $('#enter').addEventListener('click',entrar);
+  $('#enter').addEventListener('click',()=>{if(reg)entrar();else pedirReg()});
   $('#home-brand').addEventListener('click',volver);
   if(!ya)$('#enter').focus();
 })();
