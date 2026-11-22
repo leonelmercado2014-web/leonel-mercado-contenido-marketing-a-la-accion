@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonel Mercado · Contenido Marketing a la Acción</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* Plan: marca ALIADIG (negro, amarillo, morado). Barra lateral de ruta + panel de lección tipo web. */
+:root{
+  --bg:#0A0A0A; --panel:#141414; --panel2:#1B1B1B; --line:#2A2A2A;
+  --y:#FFD700; --p:#8B5CF6; --t:#F5F5F5; --mut:#A3A3A3;
+  --ok:#22C55E; --warn:#F59E0B; --bad:#EF4444;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--t);font-family:var(--font);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--y);outline-offset:2px}
+.app{display:grid;grid-template-columns:292px 1fr;height:100%}
+/* sidebar */
+.side{background:#0E0E0E;border-right:1px solid var(--line);overflow-y:auto;padding:18px 14px 28px;display:flex;flex-direction:column;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;padding:6px;border:0;background:none;color:inherit;text-align:left;border-radius:14px;width:100%}
+.brand:hover{background:#181818}
+.brand img.ava{width:58px;height:58px;border-radius:50%;object-fit:cover;object-position:50% 20%;background:#1b1535;border:2px solid var(--y);flex:none}
+.brand b{display:block;font-size:15px;letter-spacing:-.01em}.brand span{font-size:12px;color:var(--mut);font-weight:600}
+.prog{padding:0 6px}
+.prog .lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);font-weight:600;margin-bottom:6px}
+.bar{height:6px;border-radius:6px;background:#242424;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--y),var(--p));transition:width .4s}
+.phase{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--p);font-weight:800;padding:8px 8px 4px}
+.nav button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;color:var(--mut);padding:8px 8px;border-radius:10px;font-size:14px;font-weight:600}
+.nav button:hover{background:#181818;color:var(--t)}
+.nav button.on{background:#201a38;color:var(--t);box-shadow:inset 3px 0 0 var(--y)}
+.nav .n{flex:none;width:24px;height:24px;border-radius:8px;background:#1f1f1f;border:1px solid var(--line);display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--mut)}
+.nav button.on .n{background:var(--y);color:#0A0A0A;border-color:var(--y)}
+.nav button.seen .n{background:var(--ok);color:#06210f;border-color:var(--ok)}
+.nav button.seen.on .n{background:var(--y);color:#0A0A0A;border-color:var(--y)}
+/* main */
+.main{overflow-y:auto;position:relative}
+.top{position:sticky;top:0;z-index:5;background:rgba(10,10,10,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:10px 24px}
+.top .crumb{font-size:13px;color:var(--mut);font-weight:600;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .crumb b{color:var(--y)}
+.btn{border:1px solid var(--line);background:var(--panel);color:var(--t);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:700}
+.btn:hover{border-color:#444}
+.btn.y{background:var(--y);color:#0A0A0A;border-color:var(--y)}
+.btn.p{background:var(--p);border-color:var(--p)}
+.menu{display:none}
+.view{max-width:1000px;margin:0 auto;padding:28px 24px 40px;display:flex;flex-direction:column;gap:22px}
+.hero{display:grid;grid-template-columns:1fr 230px;gap:24px;align-items:center;background:radial-gradient(120% 140% at 100% 0%,#2a1d52 0%,#141414 55%);border:1px solid var(--line);border-radius:28px;padding:30px}
+.kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--y);font-weight:800;margin-bottom:10px}
+h1{font-size:clamp(30px,4.4vw,48px);line-height:1.04;letter-spacing:-.03em;font-weight:900;text-wrap:balance}
+h1 .y,.y{color:var(--y)}
+.goal{color:#D4D4D4;font-size:17px;margin-top:12px;max-width:52ch}
+.art svg{width:100%;height:auto;display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:20px}
+.card h3{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--p);font-weight:800;margin-bottom:12px}
+.card.hl{border-color:#4b3a8a;background:linear-gradient(180deg,#1c1535,#141414)}
+.card.yl h3{color:var(--y)}
+ul.chk{list-style:none;display:flex;flex-direction:column;gap:10px}
+ul.chk li{display:flex;gap:10px;font-size:15.5px}
+ul.chk li::before{content:"→";color:var(--y);font-weight:900;flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#1c1c1c;border:1px solid var(--line);padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700}
+a.chip{text-decoration:none;color:var(--y);border-color:#4a4310}
+a.chip:hover{background:#2a2508}
+/* tabs */
+.tabs .tb{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.tabs .tb button{background:var(--panel2);border:1px solid var(--line);color:var(--mut);padding:8px 14px;border-radius:12px;font-size:14px;font-weight:700}
+.tabs .tb button.on{background:var(--y);border-color:var(--y);color:#0A0A0A}
+.tabs .tb button .nn{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#0003;margin-right:6px;font-size:11px;font-weight:900}
+.tabs .pn{display:none}
+.tabs .pn.on{display:block;animation:in .25s ease}
+@keyframes in{from{opacity:.0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.pn h4{font-size:21px;letter-spacing:-.02em;margin-bottom:6px}
+.pn p{color:#D4D4D4;margin-bottom:8px}
+.pn .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tag{font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px;background:#241d44;color:#cfc3ff}
+.tag.g{background:#0f2a18;color:#86efac}.tag.w{background:#33260a;color:#fcd34d}.tag.r{background:#341212;color:#fca5a5}
+/* details */
+details{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:0}
+details+details{margin-top:10px}
+summary{list-style:none;padding:14px 18px;font-weight:800;display:flex;justify-content:space-between;gap:12px;cursor:pointer;font-size:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--y);font-size:22px;line-height:1;font-weight:700}
+details[open] summary::after{content:"−"}
+details .d{padding:0 18px 16px;color:#D4D4D4;font-size:15.5px}
+/* forms / calc */
+.calc{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field label{display:block;font-size:12px;color:var(--mut);font-weight:700;margin-bottom:4px}
+.field input,.field textarea{width:100%;background:#0d0d0d;border:1px solid var(--line);color:var(--t);border-radius:12px;padding:10px 12px;font-size:15px;font-family:inherit}
+.field textarea{resize:vertical;min-height:70px}
+.field input:focus,.field textarea:focus{border-color:var(--y);outline:none}
+.outs{display:flex;flex-direction:column;gap:10px}
+.out{background:#0d0d0d;border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.out span{font-size:13px;color:var(--mut);font-weight:600}
+.out b{font-size:20px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.out.big b{font-size:26px;color:var(--y)}
+.verdict{border-radius:14px;padding:14px 16px;font-weight:700;border:1px solid}
+.verdict.g{background:#0f2a18;border-color:#1f6a3a;color:#bbf7d0}
+.verdict.w{background:#33260a;border-color:#7a5a12;color:#fde68a}
+.verdict.r{background:#341212;border-color:#7f2323;color:#fecaca}
+.verdict.n{background:#1b1632;border-color:#4b3a8a;color:#ddd6fe}
+.note{font-size:13px;color:var(--mut)}
+.pre{background:#0d0d0d;border:1px dashed #3a3a3a;border-radius:14px;padding:14px;font-size:15px;color:#E5E5E5;white-space:pre-wrap}
+.pcard{display:flex;flex-direction:column;gap:10px}
+.pcard .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pcard .row b{font-size:15px}
+/* funnel */
+.fun{display:flex;flex-direction:column;gap:8px;align-items:center}
+.fun button{border:0;color:#0A0A0A;font-weight:900;font-size:16px;padding:14px 8px;border-radius:14px;background:linear-gradient(90deg,var(--y),#F59E0B);transition:transform .15s}
+.fun button:hover{transform:scale(1.02)}
+.fun button.on{outline:3px solid var(--p);outline-offset:2px}
+.legend{display:flex;gap:10px;flex-wrap:wrap}
+/* palette */
+.sw{display:flex;gap:10px;flex-wrap:wrap}
+.sw div{flex:1;min-width:110px;border-radius:14px;padding:46px 12px 10px;font-size:12px;font-weight:800;border:1px solid var(--line)}
+/* nav bottom */
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:6px}
+.sr{position:absolute;left:-9999px}
+/* present mode */
+body.present .app{grid-template-columns:1fr}
+body.present .side{display:none}
+body.present .view{max-width:1180px;font-size:112%}
+body.present .menu{display:none}
+/* responsive */
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{position:fixed;inset:0 20% 0 0;z-index:20;transform:translateX(-102%);transition:transform .25s;box-shadow:12px 0 40px #000a}
+  body.open .side{transform:none}
+  .menu{display:inline-block}
+  .hero{grid-template-columns:1fr;padding:22px}
+  .art{max-width:170px;margin:0 auto;order:-1}
+  .grid2,.grid3,.calc{grid-template-columns:1fr}
+  .top{padding:10px 16px}.view{padding:20px 16px 34px}
+}
+.art svg .ring{animation:spin 40s linear infinite;transform-box:fill-box;transform-origin:center}
+.art svg .orbit{animation:spin 16s linear infinite reverse;transform-box:fill-box;transform-origin:center}
+.art svg .ic{transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes floaty{0%,100%{transform:translateY(-2.2px)}50%{transform:translateY(2.2px)}}
+@keyframes pulse{0%,100%{transform:scale(.94)}50%{transform:scale(1.14)}}
+@keyframes flip{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.12)}}
+@keyframes wob{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+@keyframes roll{0%{transform:translateX(-3.5px) rotate(-120deg)}50%{transform:translateX(3.5px) rotate(120deg)}100%{transform:translateX(-3.5px) rotate(-120deg)}}
+@keyframes circ{0%{transform:translate(0,-2.4px)}25%{transform:translate(2.4px,0)}50%{transform:translate(0,2.4px)}75%{transform:translate(-2.4px,0)}100%{transform:translate(0,-2.4px)}}
+@keyframes shake{0%,100%{transform:rotate(0) scale(1)}20%{transform:rotate(-7deg) scale(1.08)}40%{transform:rotate(6deg) scale(1.12)}60%{transform:rotate(-4deg) scale(1.06)}80%{transform:rotate(2deg)}}
+@keyframes lift{0%,100%{transform:translateY(1px) rotate(2deg)}50%{transform:translateY(-3px) rotate(-3deg)}}
+@keyframes bounce{0%,100%{transform:translateY(0) scaleY(1)}40%{transform:translateY(-4px) scaleY(1.06)}60%{transform:translateY(0) scaleY(.92)}}
+@keyframes twirl{0%{transform:rotate(0) scale(.9)}50%{transform:rotate(180deg) scale(1.15)}100%{transform:rotate(360deg) scale(.9)}}
+.a-gear{animation:spin 6s linear infinite}.a-network{animation:spin 12s linear infinite}
+.a-rocket{animation:lift 2.2s ease-in-out infinite}
+.a-coin,.a-copy{animation:flip 2.4s ease-in-out infinite}
+.a-search{animation:circ 3s linear infinite}
+.a-target,.a-bulb{animation:pulse 1.8s ease-in-out infinite}
+.a-box,.a-funnel{animation:roll 3.4s ease-in-out infinite}
+.a-spark{animation:twirl 5s ease-in-out infinite}
+.a-wand,.a-flag,.a-store,.a-book{animation:wob 1.8s ease-in-out infinite}
+.a-mega{animation:shake 1.6s ease-in-out infinite}
+.a-gift{animation:bounce 1.5s ease-in-out infinite}
+.a-chart,.a-layers,.a-image,.a-home{animation:floaty 2s ease-in-out infinite}
+.art:hover svg .ic{animation-duration:.9s}
+.teacher{display:grid;grid-template-columns:150px 1fr;gap:22px;align-items:center}
+.teacher img{width:150px;height:150px;border-radius:26px;object-fit:cover;object-position:50% 15%;background:#1b1535;border:2px solid var(--y)}
+@media (max-width:900px){.teacher{grid-template-columns:1fr;text-align:center}.teacher img{margin:0 auto}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* pantalla de entrada */
+#splash{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:radial-gradient(90% 70% at 50% 35%,#2a1d52 0%,#0A0A0A 62%);transition:opacity .6s ease,visibility .6s}
+#splash.out{opacity:0;visibility:hidden}
+#splash.out .sp-in{transform:scale(1.08)}
+.sp-in{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:24px;transition:transform .6s ease}
+.sp-btn{position:relative;border:0;background:none;padding:0;border-radius:50%;width:min(260px,62vw);aspect-ratio:1}
+.sp-btn::before{content:"";position:absolute;inset:-10px;border-radius:50%;background:conic-gradient(from 0deg,var(--y),var(--p),var(--y));animation:spin 6s linear infinite}
+.sp-btn::after{content:"";position:absolute;inset:-10px;border-radius:50%;box-shadow:0 0 70px 6px #8b5cf655;animation:glow 2.4s ease-in-out infinite}
+.sp-btn img{position:relative;z-index:1;width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:50% 18%;background:#1b1535;border:5px solid #0A0A0A;display:block;transition:transform .25s}
+.sp-btn:hover img{transform:scale(1.04)}
+@keyframes glow{0%,100%{opacity:.45}50%{opacity:1}}
+.sp-k{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--y);font-weight:800;margin-top:22px}
+.sp-n{font-size:clamp(32px,6vw,54px);font-weight:900;letter-spacing:-.03em;line-height:1.05}
+.sp-s{color:var(--mut);font-size:16px;max-width:34ch}
+.sp-top{display:flex;flex-direction:column;gap:4px;align-items:center;background:var(--y);color:#0A0A0A;padding:14px 26px;border-radius:22px;margin-bottom:26px;box-shadow:0 10px 40px #ffd70033;animation:nudge 1.8s ease-in-out infinite;position:relative}
+.sp-top b{font-size:clamp(17px,3.2vw,24px);font-weight:900;letter-spacing:-.02em;line-height:1.15}
+.sp-top span{font-size:13px;font-weight:700;opacity:.75}
+.sp-top::after{content:"";position:absolute;left:50%;bottom:-10px;width:20px;height:20px;background:var(--y);transform:translateX(-50%) rotate(45deg);border-radius:4px}
+.sp-ptr{position:absolute;z-index:2;right:2%;bottom:4%;width:58px;height:58px;border-radius:50%;background:var(--y);display:grid;place-items:center;box-shadow:0 6px 24px #000a}
+.sp-ptr::before,.sp-ptr::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--y);animation:ripple 2s ease-out infinite}
+.sp-ptr::after{animation-delay:1s}
+.sp-ptr svg{position:relative;animation:tap 2s ease-in-out infinite}
+@keyframes ripple{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+@keyframes tap{0%,100%{transform:translate(0,0)}50%{transform:translate(-3px,-3px) scale(.9)}}
+.sp-h{margin-top:10px;font-size:13px;font-weight:700;color:#d4d4d4;border:1px solid var(--line);background:#141414;padding:8px 16px;border-radius:999px;animation:nudge 1.8s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+</style>
+</head>
+<body>
+<div id="splash" role="dialog" aria-label="Pantalla de entrada">
+  <div class="sp-in">
+    <div class="sp-top"><b>Dale clic para comenzar tu preparación</b></div>
+    <button type="button" class="sp-btn" id="enter" aria-label="Entrar a la presentación"><img src="assets/leonel.gif" alt="Leonel Mercado"><span class="sp-ptr" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="#0A0A0A" stroke="#0A0A0A" stroke-width="1.5" stroke-linejoin="round"><path d="M4 4l7.07 17 2.51-7.39L21 11.07z"/></svg></span></button>
+    <div class="sp-k">Docente y consultor</div>
+    <div class="sp-n">Leonel Mercado</div>
+    <div class="sp-s">Marketing digital en acción: de la idea al negocio lanzado</div>
+  </div>
+</div>
+<div class="app">
+  <aside class="side" id="side" aria-label="Ruta del curso">
+    <button type="button" class="brand" id="home-brand" title="Volver a la pantalla de entrada" aria-label="Volver a la pantalla de entrada"><img class="ava" src="assets/leonel.gif" alt="Leonel Mercado"><div><b>Leonel Mercado</b><span>Docente · Marketing digital</span></div></button>
+    <div class="prog"><div class="lbl"><span>Tu avance</span><span id="pct">0%</span></div><div class="bar"><i id="barfill"></i></div></div>
+    <nav class="nav" id="nav"></nav>
+  </aside>
+  <section class="main" id="main">
+    <div class="top">
+      <button class="btn menu" id="menu" aria-label="Abrir menú">☰ Menú</button>
+      <div class="crumb" id="crumb"></div>
+      <button class="btn" id="present">Presentar</button>
+    </div>
+    <div class="view" id="view"></div>
+  </section>
+</div>
+
+<script>
+/* ---------- datos ---------- */
+const IG='https://www.instagram.com/leomergbusiness/', WA='https://wa.me/573163473137', WEB='https://leomergbusiness.vercel.app';
+const META_LIB='https://www.facebook.com/ads/library/', TT_CC='https://ads.tiktok.com/business/creativecenter';
+const RELEASIT='https://apps.shopify.com/releasit-cod-order-form?s=ref&ref=aliadig&locale=es', DROPI='https://app.dropi.co/aliadig', DROPKILLER='https://dropkiller.com?fpr=991qwq';
+
+const ICON={
+ home:'<path d="M3 11l9-8 9 8v10H3z"/><rect x="10" y="14" width="4" height="7"/>',
+ bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 00-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0012 3z"/>',
+ search:'<circle cx="10" cy="10" r="6"/><path d="M15 15l6 6"/>',
+ box:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7M12 11v10"/>',
+ book:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
+ target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+ layers:'<path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/>',
+ store:'<path d="M3 9l1-5h16l1 5"/><rect x="4" y="9" width="16" height="11"/><rect x="10" y="14" width="4" height="6"/>',
+ spark:'<path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>',
+ image:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-6-5-9 9"/>',
+ copy:'<circle cx="12" cy="12" r="9"/><path d="M14.5 9.5a3.5 3.5 0 100 5"/>',
+ mega:'<path d="M3 11v2l12 5V6L3 11z"/><path d="M15 8a4 4 0 010 8M6 13l1 6h3l-1-5"/>',
+ chart:'<path d="M3 3v18h18"/><path d="M3 17l6-6 4 4 8-9"/>',
+ funnel:'<path d="M3 4h18l-7 9v6l-4 2v-8L3 4z"/>',
+ coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.5 2.5-1.5s2.5.5 2.5 1.5-1 1.5-2.5 1.5-2.5.5-2.5 1.5 1 1.5 2.5 1.5 2.5-.5 2.5-1.5"/>',
+ gear:'<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8" stroke-dasharray="3 2.2"/>',
+ rocket:'<path d="M12 3c4 2 6 6 6 10l-3 3H9l-3-3c0-4 2-8 6-10z"/><circle cx="12" cy="10" r="2"/><path d="M9 16l-2 4M15 16l2 4"/>',
+ flag:'<path d="M5 21V4M5 4h12l-2 4 2 4H5"/>',
+ network:'<circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M11 7.3L6 15.7M13 7.3l5 8.4M7.5 18h9"/>',
+ wand:'<path d="M4 20L14 10"/><path d="M13 7l4 4 2-2-4-4z"/><path d="M19 14v3M17.5 15.5h3M6 5v2M5 6h2"/>',
+ gift:'<rect x="3" y="9" width="18" height="12" rx="1"/><path d="M12 9v12M3 13h18M12 9C9 9 7 7.5 8 6s4 0 4 3zM12 9c3 0 5-1.5 4-3s-4 0-4 3z"/>'
+};
+function art(icon,label){
+  return `<svg viewBox="0 0 240 240" role="img" aria-label="${label}">
+  <defs><linearGradient id="ga" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD700"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs>
+  <circle cx="120" cy="120" r="112" fill="#0d0d0d" stroke="url(#ga)" stroke-width="3"/>
+  <circle class="ring" cx="120" cy="120" r="84" fill="none" stroke="#3a3a3a" stroke-width="1.5" stroke-dasharray="3 7"/>
+  <circle cx="120" cy="120" r="56" fill="#1b1535"/>
+  <g transform="translate(60 60) scale(5)" fill="none" stroke="#FFD700" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><g class="ic a-${icon}">${ICON[icon]}</g></g>
+  <g class="orbit"><circle cx="120" cy="120" r="108" fill="none"/><circle cx="206" cy="78" r="7" fill="#8B5CF6"/><circle cx="32" cy="168" r="5" fill="#FFD700"/><circle cx="188" cy="200" r="4" fill="#8B5CF6"/></g>
+  </svg>`;
+}
+
+const PHASES=[
+ {t:'Fundamentos',ids:['m1','m2']},
+ {t:'Producto y oferta',ids:['m3','m4','m5','m6']},
+ {t:'Tienda y contenido',ids:['m7','m8','m9','iacre','m10']},
+ {t:'Publicidad',ids:['cuentas','m11','m12','m13']},
+ {t:'Negocio',ids:['m14','m15','m16']},
+ {t:'Cierre',ids:['m17','beneficios']}
+];
+
+/* widgets: {k:'tabs'|'acc'|'calc:margin'|... } */
+const MOD={
+ m1:{n:1,icon:'bulb',title:'Negocios digitales y mentalidad',goal:'Entender qué modelo de negocio digital se ajusta a ti y qué hábitos lo sostienen.',
+  learn:['Qué es un negocio digital y en qué se diferencia de uno tradicional','Los tres modelos: dropshipping, infoproductos y servicios','Mentalidad de testeo: decidir con datos, no con ilusión','Los errores más comunes de quien empieza'],
+  practice:'Elige tu modelo y escribe una hipótesis: "Creo que [cliente] pagaría por [solución] porque [dolor]".',deliver:'Ficha de negocio de una página: modelo, cliente, problema y primera oferta.',tools:['Cuaderno o Notion','Google Forms'],
+  w:[{k:'tabs',title:'Los tres modelos',items:[
+    {t:'Dropshipping',h:'Vendes sin inventario',p:'Tú consigues al cliente y el proveedor (Dropi) despacha el producto. Te quedas con la diferencia.',tags:[['Inversión baja','g'],['Márgenes ajustados','w'],['Depende de la publicidad','w']]},
+    {t:'Infoproductos',h:'Vendes conocimiento',p:'Cursos, guías, plantillas o comunidades. Lo creas una vez y lo vendes muchas.',tags:[['Margen alto','g'],['Exige confianza','w'],['Necesita contenido constante','w']]},
+    {t:'Servicios',h:'Vendes un resultado',p:'Diseño, asesoría, pauta, clases. El ticket es alto y el cliente llega por confianza.',tags:[['Ticket alto','g'],['Capacidad limitada','w'],['Se vende por prueba social','w']]}]}]},
+ m2:{n:2,icon:'search',title:'Investigación de mercado',goal:'Validar que existe un problema real y personas dispuestas a pagar antes de gastar un peso.',
+  learn:['Los 4 filtros: Dolor, Valor, Competencia y Entrega','Cómo espiar a la competencia en la Biblioteca de Anuncios de Meta y en el Centro Creativo de TikTok','Cómo leer anuncios que llevan meses activos','Cómo elegir un nicho sin enamorarte de él'],
+  practice:'Analiza 5 anuncios de tu nicho: qué prometen, qué formato usan y qué ofrecen.',deliver:'Tabla de competencia con 5 anuncios y una conclusión de diferenciación.',tools:['Biblioteca de Anuncios de Meta','Centro Creativo de TikTok','Dropkiller'],
+  links:[['Biblioteca de Anuncios de Meta',META_LIB],['Centro Creativo de TikTok',TT_CC],['Dropkiller',DROPKILLER]],
+  w:[{k:'tabs',title:'Los 4 filtros (toca cada uno)',items:[
+    {t:'D · Dolor',h:'¿Qué tan urgente es el problema?',p:'Entre más cerca esté de tu dinero o de tu tiempo, más urgente. Un producto que resuelve un problema ahora se vende más fácil que uno que "estaría bien tener".',tags:[['Prioridad 1','g']]},
+    {t:'V · Valor',h:'¿El resultado se ve claro?',p:'El valor se percibe por el resultado que prometes, no por lo que cuesta producirlo. Prueba social y garantías lo suben.',tags:[['Prioridad 2','w']]},
+    {t:'C · Competencia',h:'¿Cómo te diferencias?',p:'Si todos dicen lo mismo, gana quien tenga un ángulo propio: nicho, método o formato. Si nadie anuncia, quizá nadie lo busca.',tags:[['Prioridad 3','w']]},
+    {t:'E · Entrega',h:'¿Puedes cumplir con margen?',p:'Aplica sobre todo a servicios: si un test sale bien y no puedes atender con calidad, se vuelve un problema.',tags:[['Servicios','']]}]}]},
+ m3:{n:3,icon:'box',title:'Dropshipping con Dropi',goal:'Armar la cadena completa: producto, proveedor, venta y entrega, con márgenes reales.',
+  learn:['Cómo funciona la logística con Dropi y el pago contra entrega','Cómo calcular el margen antes de anunciar','Criterios para elegir un producto ganador','Devoluciones y novedades: cómo cuidarte'],
+  practice:'Elige 3 productos candidatos y calcula utilidad y CPA máximo de cada uno.',deliver:'Tabla con 3 productos: precio, costo, flete, utilidad y CPA máximo.',tools:['Dropi','Dropkiller','Calculadora de margen'],
+  links:[['Dropi (comunidad ALIADIG)',DROPI],['Dropkiller',DROPKILLER]],
+  w:[{k:'tabs',num:true,title:'El flujo de un pedido',items:[
+    {t:'Producto',h:'Encuentras el producto',p:'Alta demanda, buen margen y fácil de explicar en un video corto.'},
+    {t:'Tienda',h:'Creas tu tienda',p:'Una tienda en Shopify optimizada para convertir visitantes en compradores.'},
+    {t:'Anuncios',h:'Atraes compradores',p:'Meta Ads y TikTok Ads llevan tráfico calificado a tu página.'},
+    {t:'Dropi',h:'Dropi despacha',p:'El cliente compra, Dropi gestiona el envío y tú te quedas con la diferencia.'}]},
+   {k:'calc',id:'margin'}]},
+ m4:{n:4,icon:'book',title:'Infoproductos y servicios',goal:'Convertir lo que sabes en una oferta que se pueda vender sin tener inventario.',
+  learn:['Tipos de infoproductos: guía, curso, plantilla, comunidad y mentoría','La escalera de valor: de lo gratis a lo premium','Cómo validar con preventa antes de grabar nada','Cómo poner precio a un servicio sin regalar tu tiempo'],
+  practice:'Diseña tu escalera de valor con un producto de entrada y uno principal.',deliver:'Escalera de valor con nombre, promesa y precio de cada peldaño.',tools:['Canva','Google Forms','WhatsApp Business'],
+  w:[{k:'tabs',num:true,title:'La escalera de valor',items:[
+    {t:'Gratis',h:'Imán de clientes',p:'Una guía, un diagnóstico o una clase corta que resuelve un problema pequeño y demuestra que sabes.',tags:[['Genera leads','g']]},
+    {t:'Entrada',h:'Producto de bajo precio',p:'Plantilla o mini curso. Convierte a un lead en cliente y baja la barrera de compra.',tags:[['Primera compra','g']]},
+    {t:'Principal',h:'Tu oferta central',p:'Curso o servicio con un resultado claro. Aquí está la mayor parte de tus ingresos.',tags:[['Ingreso principal','w']]},
+    {t:'Premium',h:'Acompañamiento personalizado',p:'Mentoría uno a uno o servicio a la medida. Ticket alto y cupos limitados.',tags:[['Cupos limitados','w']]}]}]},
+ m5:{n:5,icon:'target',title:'Oferta y ángulos de venta',goal:'Convertir un producto o servicio en una oferta que la gente quiera comprar ahora.',
+  learn:['Los componentes de una oferta: promesa, prueba, garantía y bono','Qué es un ángulo de venta y cómo se prueba','Urgencia y escasez sin mentir','Cómo cambiar el ángulo sin cambiar el producto'],
+  practice:'Escribe 3 ángulos distintos para el mismo producto y elige uno para testear.',deliver:'Oferta en una frase y 3 ángulos escritos.',tools:['ChatGPT o Claude','Notion'],
+  w:[{k:'offer'},{k:'tabs',title:'Ejemplos de ángulos (mismo producto)',items:[
+    {t:'Dolor',h:'"Deja de perder tiempo en...".',p:'Parte del problema que el cliente quiere eliminar.'},
+    {t:'Deseo',h:'"Imagina tener...".',p:'Parte del resultado que el cliente quiere lograr.'},
+    {t:'Comparación',h:'"En vez de pagar X, usa Y".',p:'Enfrenta la alternativa que el cliente ya conoce.'},
+    {t:'Prueba',h:'"Mira lo que dicen quienes ya lo usan".',p:'Usa testimonios y resultados reales, nunca inventados.'}]}]},
+ m6:{n:6,icon:'layers',title:'Creación de marca',goal:'Construir una identidad que se reconozca y genere confianza desde el primer anuncio.',
+  learn:['Naming: cómo elegir un nombre fácil de decir y de recordar','Identidad visual: logo, colores y tipografía','Posicionamiento: qué lugar ocupas en la cabeza del cliente','Consistencia en tienda, anuncios y redes'],
+  practice:'Define nombre, 2 colores principales y una frase de posicionamiento.',deliver:'Mini manual de marca de una página.',tools:['Canva','Coolors','Namecheap o similar'],
+  w:[{k:'brand'}]},
+ m7:{n:7,icon:'store',title:'Tienda en Shopify y páginas con IA',goal:'Montar una tienda y una página de producto que conviertan, apoyándote en IA para ir más rápido.',
+  learn:['Estructura de una tienda: inicio, colección, producto y checkout','Anatomía de una página de producto que vende','Cómo usar IA para escribir textos y generar la estructura de la página','Formulario de pago contra entrega con Releasit'],
+  practice:'Crea una tienda de desarrollo y arma la página de un producto con tu estructura.',deliver:'Página de producto publicada en una tienda de práctica.',tools:['Shopify','Releasit','IA para textos'],
+  links:[['Releasit (60 pedidos extra)',RELEASIT]],
+  w:[{k:'tabs',num:true,title:'Anatomía de una página de producto',items:[
+    {t:'Titular',h:'Promete el resultado',p:'Una línea clara con el beneficio principal, no el nombre técnico del producto.'},
+    {t:'Galería',h:'Muestra el producto en uso',p:'Fotos y video corto. Que se vea el antes, el después y el detalle.'},
+    {t:'Beneficios',h:'Cinco beneficios en viñetas',p:'Cada uno responde a una duda: ¿para qué me sirve y por qué me conviene?'},
+    {t:'Prueba',h:'Reseñas y garantía',p:'Testimonios reales y una garantía visible bajan el miedo a comprar.'},
+    {t:'Compra',h:'Botón y formulario claros',p:'Un solo llamado a la acción, visible desde el primer pantallazo, y un formulario simple.'}]}]},
+ m8:{n:8,icon:'spark',title:'Contenido con inteligencia artificial',goal:'Usar IA para producir guiones, textos e imágenes en una fracción del tiempo, con tu criterio.',
+  learn:['Cómo escribirle bien a una IA: contexto, tarea y formato','Guiones para video corto en minutos','Imágenes y videos generados: cuándo sirven y cuándo no','Cómo revisar lo que la IA entrega antes de publicarlo'],
+  practice:'Genera 3 guiones y 10 ganchos para tu producto con la biblioteca de prompts.',deliver:'3 guiones listos para grabar y 10 ganchos.',tools:['ChatGPT','Claude','CapCut','Canva'],
+  w:[{k:'prompts'}]},
+ m9:{n:9,icon:'image',title:'Tipos de creativos y copywriting',goal:'Producir creativos variados y textos persuasivos para tener qué testear.',
+  learn:['Formatos: UGC, demostración, imagen estática, carrusel y testimonio','El gancho de los primeros 3 segundos','La fórmula AIDA: atención, interés, deseo, acción','Cuántas variantes lanzar y cómo nombrarlas'],
+  practice:'Escribe un copy con AIDA y graba 3 versiones del gancho.',deliver:'1 copy AIDA y 3 videos de 15 a 30 segundos.',tools:['CapCut','Canva','Celular con buena luz'],
+  w:[{k:'tabs',title:'Tipos de creativos',items:[
+    {t:'UGC',h:'Persona real usando el producto',p:'Parece contenido normal y no un anuncio. Genera cercanía y confianza.',tags:[['Video','']]},
+    {t:'Demostración',h:'El producto funcionando',p:'Muestras el problema y cómo se resuelve en segundos.',tags:[['Video','']]},
+    {t:'Imagen',h:'Una pieza estática',p:'Beneficio claro en pocas palabras. Rápida de producir y de probar.',tags:[['Imagen','']]},
+    {t:'Testimonio',h:'Un cliente cuenta su resultado',p:'Prueba social directa. Solo con testimonios reales y autorizados.',tags:[['Video o imagen','']]}]},
+   {k:'aida'}]},
+
+ cuentas:{icon:'network',title:'Fanpage, Business Manager y políticas',goal:'Entender cómo se organiza un negocio en Meta y TikTok, de tu perfil personal a la cuenta publicitaria, y cómo evitar bloqueos.',
+  learn:['Del perfil personal a la Página, el portafolio comercial y la cuenta publicitaria','Cómo se estructura TikTok: cuenta, Business Center y cuenta publicitaria','Qué es el pixel y para qué sirve medir','Resumen de políticas y causas frecuentes de bloqueo'],
+  practice:'Dibuja la estructura de tu negocio en Meta y en TikTok y crea tu portafolio comercial con una Página.',deliver:'Diagrama de cuentas y checklist de políticas para tu negocio.',tools:['Meta Business Suite','Administrador de Anuncios','TikTok Business Center','TikTok Ads Manager'],
+  links:[['Políticas de publicidad de Meta','https://transparency.meta.com/policies/ad-standards/'],['Meta Business Suite','https://business.facebook.com/'],['Política de cuentas de TikTok Ads','https://ads.tiktok.com/help/article/actor-policy'],['Cuentas suspendidas en TikTok','https://ads.tiktok.com/help/article/account-suspension-faq']],
+  w:[{k:'tabs',num:true,title:'Meta: de tu perfil al anuncio',items:[
+    {t:'Perfil',h:'Tu perfil personal de Facebook',p:'Es tu identidad y de aquí parte todo. Pero no es el lugar para administrar un negocio: si algo le pasa al perfil, puedes perder el acceso a lo que dependía de él.'},
+    {t:'Página',h:'La fanpage del negocio',p:'La Página es la cara pública de tu marca y se crea desde tu perfil. También sirve una cuenta profesional de Instagram.'},
+    {t:'Portafolio',h:'Business Manager (portafolio comercial)',p:'En Meta Business Suite creas tu portafolio comercial con el nombre y el correo del negocio. Ahí viven la Página, las cuentas publicitarias, el pixel y las personas con acceso. Es gratis. Según varias guías, cada persona puede crear máximo dos portafolios, así que no los malgastes.'},
+    {t:'Cuenta publicitaria',h:'Donde pagas y administras anuncios',p:'Dentro del portafolio creas la cuenta publicitaria y registras el método de pago. Una cuenta creada en un portafolio no se pasa a otro y no se elimina, solo se cierra: decide bien a quién pertenece desde el primer día.'},
+    {t:'Datos',h:'Pixel y API de conversiones',p:'Conectas el pixel (conjunto de datos) para medir visitas, formularios y compras de tu tienda. Sin datos, la plataforma optimiza a ciegas.'},
+    {t:'Equipo',h:'Personas y socios',p:'A cada persona le das el mínimo acceso que necesita. A una agencia o freelancer le das acceso como socio, que puedes revocar, en lugar de compartir tu contraseña.'}]},
+   {k:'tabs',num:true,title:'TikTok: de la cuenta al anuncio',items:[
+    {t:'Cuenta',h:'Cuenta de TikTok',p:'Tu cuenta personal o de marca, donde publicas contenido orgánico.'},
+    {t:'Empresa',h:'Cuenta de empresa',p:'Cambias a cuenta de empresa para usar las herramientas de negocio, como estadísticas y la música comercial.'},
+    {t:'Business Center',h:'Tu centro de negocio',p:'Reúne cuentas publicitarias, pixel y personas. Desde un Business Center verificado, un administrador puede crear cuentas publicitarias. Hay un límite que varía según el tipo de centro.'},
+    {t:'Ads Manager',h:'La cuenta publicitaria',p:'Aquí creas campañas, grupos de anuncios y anuncios. Para aprobar la cuenta, TikTok pide un sitio web oficial del negocio, y el nombre de tus documentos debe coincidir con el de la cuenta y el sitio.'},
+    {t:'Vendedor',h:'Cuenta de vendedor',p:'Cada plataforma tiene su opción para vender dentro de ella: en Meta, el catálogo y Commerce Manager; en TikTok, TikTok Shop. Revisa si están disponibles en tu país antes de planear tu venta.'}]},
+   {k:'tabs',title:'Políticas: por qué te pueden bloquear',items:[
+    {t:'Meta',h:'Resumen de las Normas de Publicidad',p:'• Los anuncios se revisan con herramientas automáticas antes y después de publicarse, incluida tu página de destino\n• Prácticas engañosas: promesas falsas, estafas o usar la imagen de un famoso para atraer clics\n• Contenido impactante, violento, para adultos o con groserías\n• Salud y cuerpo: mensajes que hagan sentir mal a la persona para vender dietas o productos de adelgazamiento\n• Productos ilegales o inseguros y prácticas discriminatorias\n• Crear cuentas con automatización o manejar activos conectados a cuentas ya bloqueadas\n• Infracciones repetidas: se rechaza el anuncio y la cuenta puede restringirse o inhabilitarse',tags:[['Si fue un error, pide revisión en Calidad de la cuenta','w']]},
+    {t:'TikTok',h:'Causas frecuentes de suspensión',p:'• Cambiar la página de destino después de crear la campaña\n• Conducta con intención maliciosa al crear el anuncio\n• Violar las normas de publicidad o promover productos prohibidos o restringidos en tu país\n• Identidad engañosa o datos que no coinciden con tus documentos\n• Usar logos o productos sin licencia\n• Reportes o quejas de usuarios\n• Métodos de pago no legítimos',tags:[['Mira la pestaña Salud de la cuenta en Ads Manager','w'],['Las graves pueden suspender de inmediato','r']]},
+    {t:'Buenas prácticas',h:'Cómo cuidar tus cuentas',p:'• Usa un portafolio comercial y no anuncies desde tu perfil personal\n• No prometas resultados garantizados ni uses antes y después engañosos\n• Que lo que dice el anuncio coincida con lo que se ve en la página\n• No cambies la página de destino con la campaña activa\n• No compartas contraseñas ni crees cuentas en masa\n• Revisa a menudo Calidad de la cuenta (Meta) y Salud de la cuenta (TikTok)\n• Lee las políticas completas antes de lanzar: cambian con frecuencia',tags:[['Resumen educativo, no reemplaza las políticas oficiales','']]}]}]},
+ iacre:{icon:'wand',title:'IA para creativos y skills',goal:'Producir imágenes y videos de anuncios con IA y convertir tus mejores prompts en skills que puedes reutilizar.',
+  learn:['Flujo para creativos estáticos con IA: brief, prompt, variantes y edición','Flujo para video: guion, clips o avatar, edición y subtítulos','Qué es una skill y en qué se diferencia de un prompt','Cómo se usan skills y prompts en ChatGPT, Claude, Gemini y DeepSeek'],
+  practice:'Genera 5 variantes de un creativo estático y un video corto, y convierte tu mejor prompt en una skill.',deliver:'5 imágenes, 1 video y 1 archivo SKILL.md propio.',tools:['ChatGPT','Claude','Gemini','DeepSeek','Canva','CapCut','Creatify'],
+  w:[{k:'tabs',num:true,title:'Creativos con IA',items:[
+    {t:'Estático',h:'Imágenes para anuncios',p:'1. Define el brief: producto, público, beneficio y formato (1:1 o 9:16)\n2. Pídele a una IA de texto el prompt de imagen y varias versiones\n3. Genera con una herramienta de imágenes (por ejemplo la de ChatGPT o Gemini, Midjourney o Canva)\n4. Pon el texto y el logo en Canva: el texto generado por la IA a veces sale con errores\n5. Haz de 3 a 5 variantes con ángulos distintos',tags:[['Rápido de probar','g']]},
+    {t:'Video',h:'Videos cortos para Reels y TikTok',p:'1. Escribe el guion con IA: gancho, problema, demostración y llamado a la acción\n2. Graba tú mismo el video o genera clips y avatares con herramientas de video (por ejemplo Runway, Kling, HeyGen o Creatify)\n3. Edita en CapCut\n4. Agrega subtítulos y música con licencia comercial\n5. Lanza 3 versiones del gancho',tags:[['Los primeros 3 segundos deciden','w']]},
+    {t:'Revisión',h:'Antes de publicar',p:'• No inventes testimonios ni resultados\n• No uses la cara ni la voz de una persona real sin su permiso\n• El producto del video debe verse como es: si no, engaña y puede ser rechazado\n• Revisa los términos de uso comercial de cada herramienta\n• Una persona debe revisar todo antes de publicar',tags:[['Evita rechazos y reclamos','r']]}]},
+   {k:'tabs',title:'Skills: qué son y cómo se usan en cada IA',items:[
+    {t:'¿Qué es?',h:'Una receta que la IA carga cuando la necesita',p:'Una skill es una carpeta con un archivo SKILL.md: un nombre, una descripción de cuándo usarla y las instrucciones paso a paso, más archivos opcionales como plantillas o ejemplos. La IA la carga solo cuando la tarea lo pide.\n\nUn prompt lo escribes cada vez. Una skill la escribes una vez y la reutilizas. Es un formato abierto que varias plataformas ya adoptaron.'},
+    {t:'Claude',h:'Skills en Claude',p:'Anthropic creó el formato. En Claude se gestionan desde la configuración (Personalizar) y puedes cargar las tuyas. También funcionan en Claude Code y en la API.'},
+    {t:'ChatGPT',h:'Skills en ChatGPT',p:'Desde julio de 2026, ChatGPT admite skills con el mismo formato SKILL.md. La disponibilidad depende del plan (por ejemplo Business, Enterprise y Edu), así que verifica si tu plan las incluye. Antes se usaban los GPT personalizados, con instrucciones y archivos.'},
+    {t:'Gemini',h:'Skills en Gemini',p:'Google está reemplazando los Gems por skills. Revisa en tu cuenta si ya las tienes activas, porque el cambio llega por etapas.'},
+    {t:'DeepSeek',h:'DeepSeek y otras IA',p:'No encontré una función nativa de skills en DeepSeek. El contenido de la skill sirve igual: pega las instrucciones al inicio de la conversación o, si usas la API, como mensaje de sistema. Confírmalo en la app, porque estas funciones cambian rápido.',tags:[['Funciona como prompt guardado','w']]}]},
+   {k:'skilltpl'}]},
+ m10:{n:10,icon:'copy',title:'Derechos de autor y uso responsable',goal:'Evitar bloqueos, reclamos y multas por usar contenido que no es tuyo.',
+  learn:['Qué protege el derecho de autor: música, imágenes, videos y marcas','Música para anuncios: bibliotecas comerciales de cada plataforma','Contenido generado por IA: revisa los términos de cada herramienta','Cómo documentar permisos y licencias'],
+  practice:'Revisa uno de tus creativos y clasifica cada elemento: verde, amarillo o rojo.',deliver:'Checklist de derechos de un creativo.',tools:['Biblioteca de música comercial de cada plataforma','Licencias de Canva'],
+  w:[{k:'tabs',title:'Semáforo de uso',items:[
+    {t:'Verde',h:'Puedes usarlo',p:'• Tus propias fotos y videos\n• Música de la biblioteca comercial de la plataforma\n• Material con licencia comercial\n• Contenido de creadores con autorización escrita',tags:[['Seguro','g']]},
+    {t:'Amarillo',h:'Revísalo antes',p:'• Imágenes y videos generados con IA: confirma si los términos permiten uso comercial\n• Videos que te da el proveedor: pide permiso\n• Elementos Pro de Canva: revisa la licencia',tags:[['Verifica','w']]},
+    {t:'Rojo',h:'No lo uses',p:'• Canciones populares de artistas\n• Imágenes de Google, Pinterest o de la competencia\n• Videos descargados de otras tiendas o cuentas\n• Marcas, logos y personajes ajenos\n• La imagen de una persona sin autorización',tags:[['Riesgo alto','r']]}]},
+   {k:'note',t:'Esto es una guía educativa, no asesoría legal. Ante dudas, consulta a un abogado.'}]},
+ m11:{n:11,icon:'mega',title:'Publicidad en Meta Ads y TikTok Ads',goal:'Configurar una campaña con presupuesto de prueba y entender cómo funciona cada plataforma.',
+  learn:['Estructura: campaña, conjunto de anuncios y anuncio','Objetivos: ventas, clientes potenciales, mensajes y tráfico','Públicos amplios frente a públicos segmentados','Cuándo usar Meta y cuándo TikTok'],
+  practice:'Configura una campaña de prueba con tope de gasto y 2 creativos.',deliver:'Captura de la campaña lista con objetivo, público, presupuesto y creativos.',tools:['Administrador de Anuncios de Meta','TikTok Ads Manager'],
+  links:[['Biblioteca de Anuncios de Meta',META_LIB],['Centro Creativo de TikTok',TT_CC]],
+  w:[{k:'tabs',title:'Meta o TikTok',items:[
+    {t:'Meta Ads',h:'Facebook, Instagram y WhatsApp',p:'Suele rendir en servicios de ticket medio o alto, con formulario o WhatsApp. Útil para captar clientes potenciales y citas con audiencias más definidas.',tags:[['Leads y mensajes','g']]},
+    {t:'TikTok Ads',h:'Video nativo',p:'Suele rendir para validar ganchos rápido con video estilo UGC. Útil para alcance, marca personal y primeras pruebas de creativo.',tags:[['Ganchos y alcance','g']]}]},
+   {k:'tabs',num:true,title:'La estructura de una campaña',items:[
+    {t:'Campaña',h:'El objetivo',p:'Defines qué quieres lograr: ventas, mensajes, clientes potenciales o tráfico.'},
+    {t:'Conjunto',h:'El público y el presupuesto',p:'Eliges a quién le muestras el anuncio, dónde y cuánto gastas al día.'},
+    {t:'Anuncio',h:'El creativo y el texto',p:'Video o imagen, texto y botón. Aquí pruebas variantes.'}]}]},
+ m12:{n:12,icon:'chart',title:'Métricas y testeo',goal:'Leer los números para decidir si apagas, mantienes o escalas un anuncio.',
+  learn:['CPM, CPC, CTR, CPL, CPA, CAC y ROAS: qué mide cada uno','Regla 3-5-1: metas según lo gastado','Cuánto gastar antes de decidir','Cómo diagnosticar: gancho, clic o cierre'],
+  practice:'Calcula tu CAC máximo y aplica la regla 3-5-1 a los resultados de tu test.',deliver:'Tabla de resultados del test con decisión: apagar, mantener o escalar.',tools:['Administrador de Anuncios','Hoja de cálculo'],
+  w:[{k:'glossary'},{k:'calc',id:'metrics'}]},
+ m13:{n:13,icon:'funnel',title:'Embudos de ventas',goal:'Diseñar el camino que recorre una persona desde que te ve hasta que compra.',
+  learn:['Etapas: atención, interés, deseo y acción','Qué métrica y qué ajuste corresponde a cada etapa','Embudos para productos físicos, infoproductos y servicios','Retargeting y seguimiento por WhatsApp'],
+  practice:'Dibuja tu embudo con las métricas que vas a vigilar en cada etapa.',deliver:'Diagrama del embudo con una métrica por etapa.',tools:['Canva','Miro o papel y lápiz'],
+  w:[{k:'funnel'}]},
+ m14:{n:14,icon:'coin',title:'Finanzas del negocio',goal:'Saber cuánto te queda realmente de cada venta y del mes, con devoluciones incluidas.',
+  learn:['Estado de resultados simple: ingresos, costos y utilidad','Margen bruto y margen neto','Punto de equilibrio y CPA máximo','Separar plata del negocio de plata personal'],
+  practice:'Llena el simulador con tu producto y define tu meta mensual de utilidad.',deliver:'Estado de resultados del mes de prueba.',tools:['Hoja de cálculo','Cuenta bancaria separada'],
+  w:[{k:'calc',id:'finance'}]},
+ m15:{n:15,icon:'gear',title:'Sistemas y estructuras',goal:'Ordenar el negocio para que funcione sin depender de ti en cada pedido.',
+  learn:['El sistema central: del pedido a la entrega','Automatización de pedidos con Dropi','Confirmación y seguimiento por WhatsApp','Procesos escritos para delegar'],
+  practice:'Documenta tu proceso de pedido paso a paso y marca qué se puede automatizar.',deliver:'Diagrama de tu sistema con responsables y herramientas.',tools:['Dropi','WhatsApp Business','Hoja de cálculo'],
+  links:[['Dropi (comunidad ALIADIG)',DROPI]],
+  w:[{k:'tabs',num:true,title:'El camino de un pedido',items:[
+    {t:'Pedido',h:'Entra el pedido',p:'Llega desde tu tienda. Se registra y se valida el dato: nombre, teléfono, ciudad y dirección.'},
+    {t:'Confirmación',h:'Confirmas con el cliente',p:'Un mensaje por WhatsApp confirma el pedido y reduce devoluciones.'},
+    {t:'Dropi',h:'Dropi despacha',p:'El pedido pasa a Dropi, que prepara el envío con la transportadora.'},
+    {t:'Seguimiento',h:'Sigues la guía',p:'Avisas al cliente el estado y gestionas las novedades a tiempo.'},
+    {t:'Postventa',h:'Cierras con servicio',p:'Pides reseña, resuelves problemas y ofreces una segunda compra.'}]}]},
+ m16:{n:16,icon:'rocket',title:'Escalamiento',goal:'Aumentar presupuesto sobre lo que ya funciona sin romper los números.',
+  learn:['Cuándo un anuncio está listo para escalar','Escalar de forma gradual: subir presupuesto sin reiniciar el aprendizaje','Duplicar frente a subir presupuesto','Cuándo parar y volver a testear'],
+  practice:'Define tus reglas de escalamiento con porcentajes y límites.',deliver:'Documento con 5 reglas de escalamiento propias.',tools:['Administrador de Anuncios','Hoja de cálculo'],
+  w:[{k:'acc',items:[
+    ['Cuándo escalar','Cuando el CAC está por debajo de tu máximo y se sostiene varios días con compras reales, no solo con un día bueno.'],
+    ['Cómo subir presupuesto','De forma gradual y por pasos pequeños. Un salto brusco puede alterar la entrega del anuncio y empeorar el costo.'],
+    ['Cuándo duplicar','Para probar el mismo anuncio con otro público o con más presupuesto, sin tocar el original que ya funciona.'],
+    ['Cuándo parar','Si el CAC pasa tu límite varios días seguidos. Apaga, anota lo aprendido y lanza el siguiente test.']]}]},
+ m17:{n:17,icon:'flag',title:'Proyecto final',goal:'Presentar un negocio lanzado: oferta validada, tienda, creativos, campaña y números.',
+  learn:['Cómo presentar resultados con datos reales','Qué aprendiste de lo que no funcionó','Siguientes pasos para tu negocio','Cómo seguir mejorando'],
+  practice:'Prepara una presentación de 5 minutos con tu oferta, tu test y tus decisiones.',deliver:'Presentación final con métricas y plan de los próximos 30 días.',tools:['Canva','Tus propios resultados'],
+  w:[{k:'rubric'}]}
+};
+
+/* ---------- utilidades ---------- */
+const $=s=>document.querySelector(s);
+const fmt=n=>'$'+Math.round(n).toLocaleString('es-CO');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let seen={};
+try{seen=JSON.parse(localStorage.getItem('aliadig-visto')||'{}')}catch(e){seen={}}
+function save(){try{localStorage.setItem('aliadig-visto',JSON.stringify(seen))}catch(e){}}
+const ORDER=['inicio',...PHASES.flatMap(p=>p.ids)];
+const N={};ORDER.filter(i=>MOD[i]).forEach((id,i)=>N[id]=i+1);
+const TOTALMOD=Object.keys(N).length;
+const TITLES={inicio:'Inicio',beneficios:'Beneficios'};
+ORDER.forEach(id=>{if(MOD[id])TITLES[id]=MOD[id].title});
+
+/* ---------- barra lateral ---------- */
+function buildNav(){
+  let h=`<button data-go="inicio" id="nv-inicio"><span class="n">⌂</span>Inicio</button>`;
+  PHASES.forEach(p=>{
+    h+=`<div class="phase">${p.t}</div>`;
+    p.ids.forEach(id=>{
+      const m=MOD[id];
+      h+=`<button data-go="${id}" id="nv-${id}"><span class="n">${m?N[id]:'★'}</span>${esc(TITLES[id])}</button>`;
+    });
+  });
+  $('#nav').innerHTML=h;
+}
+function paintNav(cur){
+  ORDER.forEach(id=>{const b=document.getElementById('nv-'+id);if(!b)return;b.classList.toggle('on',id===cur);b.classList.toggle('seen',!!seen[id])});
+  const total=ORDER.length-1, done=ORDER.filter(i=>i!=='inicio'&&seen[i]).length, pc=Math.round(done/total*100);
+  $('#pct').textContent=pc+'%';$('#barfill').style.width=pc+'%';
+}
+
+/* ---------- widgets ---------- */
+let uid=0;
+function tabs(w){
+  const id='t'+(++uid);
+  const tb=w.items.map((it,i)=>`<button type="button" data-tab="${id}:${i}" class="${i===0?'on':''}">${w.num?`<span class="nn">${i+1}</span>`:''}${esc(it.t)}</button>`).join('');
+  const pn=w.items.map((it,i)=>`<div class="pn ${i===0?'on':''}" data-pn="${id}:${i}"><h4>${esc(it.h||it.t)}</h4><p>${esc(it.p).replace(/\n/g,'<br>')}</p>${it.tags?`<div class="meta">${it.tags.map(t=>`<span class="tag ${t[1]}">${esc(t[0])}</span>`).join('')}</div>`:''}</div>`).join('');
+  return `<div class="card tabs" data-g="${id}">${w.title?`<h3>${esc(w.title)}</h3>`:''}<div class="tb">${tb}</div>${pn}</div>`;
+}
+function field(id,label,val,type='number',extra=''){return `<div class="field"><label for="${id}">${label}</label><input id="${id}" type="${type}" value="${val}" ${extra} inputmode="${type==='number'?'numeric':'text'}"></div>`}
+function out(id,label,big){return `<div class="out ${big?'big':''}"><span>${label}</span><b id="${id}">-</b></div>`}
+
+const W={
+ tabs,
+ note:w=>`<p class="note">${esc(w.t)}</p>`,
+ acc:w=>`<div>${w.items.map((a,i)=>`<details ${i===0?'open':''}><summary>${esc(a[0])}</summary><div class="d">${esc(a[1])}</div></details>`).join('')}</div>`,
+ calc:w=>({
+  margin:`<div class="card calc" data-calc="margin"><div><h3>Calculadora de margen</h3><div class="fields">${field('mg-precio','Precio de venta','89900')}${field('mg-costo','Costo del producto (Dropi)','32000')}${field('mg-flete','Flete','14000')}${field('mg-otros','Comisiones y otros (%)','3')}</div><p class="note" style="margin-top:12px">Escribe tus cifras y mira el resultado al instante.</p></div><div class="outs">${out('mg-u','Utilidad antes de anuncios')}${out('mg-m','Margen sobre el precio')}${out('mg-cpa','CPA máximo para no perder',1)}</div></div>`,
+  metrics:`<div class="card calc" data-calc="metrics"><div><h3>Regla 3-5-1 en vivo</h3><div class="fields">${field('mt-ticket','Precio de tu oferta','1000000')}${field('mt-pct','CAC máximo (% del precio)','20')}${field('mt-gasto','Gastado en anuncios','100000')}${field('mt-leads','Leads calificados','4')}${field('mt-ventas','Ventas','0')}</div><p class="note" style="margin-top:12px">Metas de la regla: 3 leads al 50% del CAC máximo, 5 leads al 75% y 1 venta al 100%.</p></div><div class="outs">${out('mt-cac','CAC máximo',1)}${out('mt-real','CAC real (gastado ÷ ventas)')}<div class="verdict n" id="mt-v">-</div></div></div>`,
+  finance:`<div class="card calc" data-calc="finance"><div><h3>Simulador de utilidad mensual</h3><div class="fields">${field('fn-precio','Precio de venta','89900')}${field('fn-costo','Costo del producto','32000')}${field('fn-flete','Flete','14000')}${field('fn-otros','Comisiones y otros (%)','3')}${field('fn-cpa','CPA por pedido creado','25000')}${field('fn-dev','Devoluciones (%)','15')}${field('fn-ped','Pedidos creados al mes','100')}</div><p class="note" style="margin-top:12px">Supuesto: en una devolución pierdes el flete. Cambia los valores a los de tu producto.</p></div><div class="outs">${out('fn-uped','Utilidad por pedido creado')}${out('fn-umes','Utilidad del mes',1)}${out('fn-ing','Ingresos entregados')}${out('fn-mar','Margen neto sobre ingresos')}${out('fn-eq','CPA de equilibrio')}<div class="verdict n" id="fn-v">-</div></div></div>`
+ })[w.id],
+ offer:()=>`<div class="card calc hl" data-calc="offer"><div><h3>Constructor de oferta</h3><div class="fields"><div class="field" style="grid-column:1/-1"><label for="of-a">¿A quién ayudas?</label><input id="of-a" type="text" value="emprendedores que venden por Instagram"></div><div class="field" style="grid-column:1/-1"><label for="of-b">¿Qué resultado logran?</label><input id="of-b" type="text" value="conseguir sus primeros 10 clientes"></div>${field('of-c','¿En cuánto tiempo?','30 días','text')}${field('of-d','Garantía o bono','una sesión de revisión gratis','text')}</div></div><div class="outs"><div class="pre" id="of-out"></div><button class="btn y" type="button" data-copy="of-out">Copiar oferta</button><ul class="chk" style="font-size:14px"><li>Dolor: ¿el problema es urgente?</li><li>Valor: ¿el resultado se entiende?</li><li>Competencia: ¿te diferencias?</li><li>Entrega: ¿puedes cumplir?</li></ul></div></div>`,
+ aida:()=>`<div class="card calc hl" data-calc="aida"><div><h3>Copy con AIDA</h3><div class="fields"><div class="field" style="grid-column:1/-1"><label for="ai-a">Atención: frena el scroll</label><textarea id="ai-a">¿Cansado de publicar y no vender?</textarea></div><div class="field" style="grid-column:1/-1"><label for="ai-i">Interés: el problema</label><textarea id="ai-i">La mayoría publica sin un plan y se frustra a las dos semanas.</textarea></div><div class="field" style="grid-column:1/-1"><label for="ai-d">Deseo: el resultado</label><textarea id="ai-d">Imagina tener un sistema que te traiga clientes cada semana.</textarea></div><div class="field" style="grid-column:1/-1"><label for="ai-o">Acción: qué hacer ahora</label><textarea id="ai-o">Escríbenos por WhatsApp y te mostramos cómo.</textarea></div></div></div><div class="outs"><div class="pre" id="ai-out"></div><button class="btn y" type="button" data-copy="ai-out">Copiar texto</button></div></div>`,
+ brand:()=>`<div class="grid2"><div class="card"><h3>Naming: 5 pruebas rápidas</h3><ul class="chk"><li>¿Se pronuncia igual para todos?</li><li>¿Se escribe sin dudas?</li><li>¿Tiene dominio y usuario de Instagram libres?</li><li>¿Suena como algo que da confianza?</li><li>¿Cabe en un logo pequeño?</li></ul></div><div class="card"><h3>Identidad en 3 decisiones</h3><ul class="chk"><li>2 colores principales y 1 de apoyo</li><li>Una tipografía para títulos y otra para texto</li><li>Un estilo de foto o video constante</li></ul></div></div><div class="card"><h3>Ejemplo: una paleta de marca</h3><div class="sw"><div style="background:#0A0A0A;color:#fff">Negro #0A0A0A</div><div style="background:#FFD700;color:#0A0A0A">Amarillo #FFD700</div><div style="background:#8B5CF6;color:#fff">Morado #8B5CF6</div><div style="background:#A3A3A3;color:#0A0A0A">Gris #A3A3A3</div></div></div>`,
+ prompts:()=>{
+  const P=[
+   ['Investigar al cliente','Actúa como investigador de mercado. Mi producto es [producto] para [público] en Colombia. Dame 10 dolores, 10 deseos y 5 objeciones de compra, escritos con las palabras que usaría el cliente.'],
+   ['Guion de 30 segundos','Escribe 3 guiones de 30 segundos para TikTok o Reels sobre [producto]. Estructura: gancho en los primeros 3 segundos, problema, demostración, oferta y llamado a la acción. Tono cercano y en español colombiano.'],
+   ['Copy con AIDA','Redacta un texto de anuncio para [producto] con la fórmula AIDA (atención, interés, deseo, acción). Máximo 80 palabras, sin promesas exageradas.'],
+   ['Estructura de página de producto','Crea la estructura de una página de producto para [producto]: titular, subtítulo, 5 beneficios, prueba social, garantía, preguntas frecuentes y llamado a la acción.'],
+   ['Variantes de gancho','Dame 10 ganchos distintos para un anuncio de [producto], de máximo 8 palabras cada uno. Mezcla preguntas, datos y frases que rompan una creencia.']];
+  return `<div class="card"><h3>Biblioteca de prompts (cambia lo que va entre corchetes)</h3><div class="pcard">${P.map((p,i)=>`<details ${i===0?'open':''}><summary>${esc(p[0])}</summary><div class="d"><div class="pre" id="pr-${i}">${esc(p[1])}</div><p style="margin-top:10px"><button class="btn y" type="button" data-copy="pr-${i}">Copiar prompt</button></p></div></details>`).join('')}</div></div>`},
+ skilltpl:()=>`<div class="card hl"><h3>Ejemplo: tu primera skill (archivo SKILL.md)</h3><div class="pre" id="sk-tpl">---
+name: guion-anuncio-30s
+description: Úsala cuando pidan un guion de anuncio de 30 segundos para TikTok o Reels de un producto o servicio.
+---
+# Guion de anuncio de 30 segundos
+1. Si faltan, pregunta producto, público y oferta.
+2. Escribe 3 versiones: gancho (0 a 3 s), problema, demostración, oferta y llamado a la acción.
+3. Tono cercano, español colombiano, sin promesas exageradas ni afirmaciones de salud.
+4. Entrega en tabla: tiempo | voz | imagen.</div><p style="margin-top:12px"><button class="btn y" type="button" data-copy="sk-tpl">Copiar plantilla</button></p><p class="note" style="margin-top:8px">Guárdala en una carpeta con el nombre de la skill y súbela en la configuración de tu IA, o pega su contenido al iniciar el chat.</p></div>`,
+ glossary:()=>{
+  const G=[['CPM','Costo por mil impresiones: lo que pagas para que 1.000 personas vean tu anuncio. Si es alto, revisa el gancho o el público.'],['CPC','Costo por clic: lo que pagas cada vez que alguien hace clic. Si es alto, la promesa no engancha.'],['CTR','Porcentaje de personas que hacen clic sobre las que vieron el anuncio (clics ÷ impresiones).'],['CPL','Costo por lead: lo que pagas por cada mensaje, formulario o cita.'],['CPA','Costo por adquisición: lo que la plataforma registra que pagas por cada compra.'],['CAC','Costo de adquisición de cliente: gastado ÷ ventas reales cerradas. Es el que decide si ganas dinero.'],['ROAS','Retorno sobre la inversión publicitaria: ingresos ÷ gasto en anuncios.'],['Ticket','El precio que paga el cliente por tu producto o servicio.']];
+  return `<div class="card"><h3>Glosario de métricas</h3>${G.map((g,i)=>`<details ${i===0?'open':''}><summary>${g[0]}</summary><div class="d">${esc(g[1])}</div></details>`).join('')}</div>`},
+ funnel:()=>{
+  const S=[['Atención','Cuánta gente te ve','CPM y primeros 3 segundos','Cambia el gancho o el público','82%'],['Interés','Cuántos hacen clic','CPC y CTR','Cambia la promesa y el titular','68%'],['Deseo','Cuántos dejan sus datos o agregan al carrito','Conversión de la página','Mejora prueba social, garantía y claridad','54%'],['Acción','Cuántos compran','CPA o CAC','Revisa precio, cierre y seguimiento','40%']];
+  return `<div class="card"><h3>El embudo (toca cada etapa)</h3><div class="fun" data-fun>${S.map((s,i)=>`<button type="button" data-f="${i}" class="${i===0?'on':''}" style="width:${s[4]}">${s[0]}</button>`).join('')}</div><div id="fun-d" style="margin-top:16px"></div><script type="application/json" id="fun-data">${JSON.stringify(S)}<\/script></div>`},
+ rubric:()=>{
+  const R=['Oferta validada con el filtro D·V·C·E','Tienda o página de producto lista','Creativos y copy listos para testear','Campaña con tope de gasto y regla 3-5-1','Lectura de métricas y decisión final'];
+  return `<div class="card calc" data-calc="rubric"><div><h3>Rúbrica de autoevaluación (0 a 4)</h3><div class="fields" style="grid-template-columns:1fr">${R.map((r,i)=>`<div class="field"><label for="rb-${i}">${r}: <b id="rb-v${i}">2</b></label><input id="rb-${i}" type="range" min="0" max="4" step="1" value="2"></div>`).join('')}</div></div><div class="outs">${out('rb-t','Puntaje total',1)}<div class="verdict n" id="rb-m">-</div></div></div>`}
+};
+
+/* ---------- vistas ---------- */
+function linksHtml(m){return m.links?`<div class="chips">${m.links.map(l=>`<a class="chip" href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`).join('')}</div>`:''}
+function viewHome(){
+  const steps=PHASES.slice(0,5).map((p,i)=>`<button type="button" class="card" data-go="${p.ids[0]}" style="text-align:left;color:inherit"><div class="kick" style="margin:0 0 6px">Fase ${i+1}</div><div style="font-weight:800;font-size:18px;letter-spacing:-.02em">${p.t}</div><div class="note" style="margin-top:6px">${p.ids.map(id=>TITLES[id]).join(' · ')}</div></button>`).join('');
+  return `<div class="hero"><div><div class="kick">Formación práctica</div><h1>Marketing digital <span class="y">en acción</span></h1><p class="goal">Aprende construyendo: eliges un modelo de negocio digital, lo validas con datos y lo lanzas con publicidad real.</p><div class="chips" style="margin-top:18px"><span class="chip">${TOTALMOD} módulos</span><span class="chip">Calculadoras y plantillas</span><span class="chip">Proyecto final</span></div><div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn y" data-go="m1">Empezar el módulo 1</button><button class="btn" data-go="beneficios">Ver beneficios</button></div></div><div class="art">${art('rocket','Cohete que representa el lanzamiento del negocio')}</div></div>
+  <div class="card yl"><h3>La ruta en 5 fases (toca una para entrar)</h3><div class="grid3" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">${steps}</div></div>
+  <div class="grid2"><div class="card"><h3>Cómo se aprende aquí</h3><ul class="chk"><li>Cada módulo tiene un objetivo, lo que se aprende, una práctica y un entregable</li><li>Las calculadoras funcionan con tus propias cifras</li><li>Marca cada módulo como visto y sigue tu avance</li></ul></div><div class="card"><h3>Al terminar, el alumno habrá</h3><ul class="chk"><li>Validado una oferta con los 4 filtros</li><li>Montado una tienda de práctica</li><li>Producido creativos y copy con apoyo de IA</li><li>Lanzado un test con presupuesto controlado</li><li>Leído sus métricas para decidir</li></ul></div></div>
+  <div class="card teacher"><img src="assets/leonel.gif" alt="Leonel Mercado, docente"><div><div class="kick" style="margin-bottom:6px">Tu docente</div><div style="font-size:28px;font-weight:900;letter-spacing:-.02em">Leonel Mercado</div><p style="color:#D4D4D4;margin-top:6px">Formador en negocios digitales: dropshipping, infoproductos, páginas con IA y publicidad en Meta y TikTok.</p><div class="chips" style="margin-top:12px"><a class="chip" href="${IG}" target="_blank" rel="noopener">Instagram ↗</a><a class="chip" href="${WA}" target="_blank" rel="noopener">WhatsApp ↗</a></div></div></div>`;
+}
+function viewMod(id){
+  const m=MOD[id];
+  const wid=m.w.map(w=>W[w.k](w)).join('');
+  return `<div class="hero"><div><div class="kick">Módulo ${N[id]} de ${TOTALMOD}</div><h1>${esc(m.title)}</h1><p class="goal">${esc(m.goal)}</p></div><div class="art">${art(m.icon,'Ilustración del módulo '+m.title)}</div></div>
+  <div class="grid2"><div class="card"><h3>Qué se aprende</h3><ul class="chk">${m.learn.map(l=>`<li>${esc(l)}</li>`).join('')}</ul></div>
+  <div class="card hl"><h3>En la práctica</h3><p style="margin-bottom:14px">${esc(m.practice)}</p><h3 style="color:var(--y)">Entregable</h3><p>${esc(m.deliver)}</p></div></div>
+  ${wid}
+  <div class="card"><h3>Herramientas</h3><div class="chips">${m.tools.map(t=>`<span class="chip">${esc(t)}</span>`).join('')}</div>${m.links?`<div style="margin-top:14px">${linksHtml(m)}</div>`:''}</div>
+  <div style="display:flex;justify-content:center"><button class="btn ${seen[id]?'':'y'}" type="button" data-seen="${id}">${seen[id]?'✓ Módulo visto (toca para desmarcar)':'Marcar módulo como visto'}</button></div>`;
+}
+function viewBenefits(){
+  const B=[['Dropi','Comunidad ALIADIG sin cobro por uso','Gestiona tus pedidos de dropshipping con proveedor y logística en un solo lugar.',DROPI,'Unirme a la comunidad','box'],
+   ['Dropkiller','10% de descuento','Encuentra productos y anuncios ganadores con datos para decidir mejor.',DROPKILLER,'Activar mi descuento','search'],
+   ['Releasit','60 pedidos gratis adicionales','Formulario de pago contra entrega para tu tienda Shopify.',RELEASIT,'Instalar Releasit','store']];
+  return `<div class="hero"><div><div class="kick">Cierre</div><h1>Beneficios <span class="y">ALIADIG</span> para tu negocio</h1><p class="goal">Herramientas con condiciones especiales por ser parte de la comunidad ALIADIG.</p></div><div class="art">${art('gift','Regalo que representa los beneficios')}</div></div>
+  <div class="grid3">${B.map(b=>`<div class="card hl" style="display:flex;flex-direction:column;gap:12px"><div style="width:44px;height:44px;border-radius:14px;background:var(--y);display:grid;place-items:center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#0A0A0A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[b[5]]}</svg></div><div><div style="font-size:22px;font-weight:900;letter-spacing:-.02em">${b[0]}</div><span class="tag g" style="display:inline-block;margin-top:6px">${b[1]}</span></div><p style="color:#D4D4D4;font-size:15px;flex:1">${b[2]}</p><a class="btn y" style="text-align:center;text-decoration:none" href="${b[3]}" target="_blank" rel="noopener">${b[4]} ↗</a></div>`).join('')}</div>
+  <div class="card yl"><h3>Contacto</h3><div class="chips"><a class="chip" href="${WA}" target="_blank" rel="noopener">WhatsApp +57 316 347 3137 ↗</a><a class="chip" href="${IG}" target="_blank" rel="noopener">Instagram @leomergbusiness ↗</a><a class="chip" href="${WEB}" target="_blank" rel="noopener">leomergbusiness.vercel.app ↗</a></div></div>
+  <div class="card" style="text-align:center"><div class="kick" style="margin:0 0 6px">Gracias</div><div style="font-size:26px;font-weight:900;letter-spacing:-.02em">Ahora toca lanzar. <span class="y">Manos a la obra.</span></div></div>`;
+}
+
+/* ---------- interacciones ---------- */
+const num=id=>{const e=document.getElementById(id);return e?parseFloat(e.value)||0:0};
+const setT=(id,t)=>{const e=document.getElementById(id);if(e)e.textContent=t};
+function calcAll(){
+  if(document.getElementById('mg-precio')){
+    const p=num('mg-precio'),c=num('mg-costo'),f=num('mg-flete'),o=num('mg-otros')/100;
+    const u=p-c-f-p*o;
+    setT('mg-u',fmt(u));setT('mg-m',p?(u/p*100).toFixed(1)+'%':'-');setT('mg-cpa',fmt(Math.max(u,0)));
+  }
+  if(document.getElementById('mt-ticket')){
+    const t=num('mt-ticket'),pc=num('mt-pct')/100,g=num('mt-gasto'),l=num('mt-leads'),v=num('mt-ventas');
+    const max=t*pc;setT('mt-cac',fmt(max));setT('mt-real',v>0?fmt(g/v):'Sin ventas aún');
+    let cls='n',msg='';
+    if(v>0){const cac=g/v;
+      if(cac<=max){cls='g';msg='Ganó: tu CAC está dentro del máximo. Sostén y escala de forma gradual.'}
+      else if(cac<=max*1.25){cls='w';msg='Sostenlo: pasa un poco el máximo. Mira un día más antes de decidir.'}
+      else{cls='r';msg='Muy caro: supera el máximo por bastante. Apaga y prueba otra oferta.'}}
+    else if(g>=max){cls='r';msg='Apágalo: llegaste al 100% del máximo sin ventas.'}
+    else if(g>=max*.75){if(l>=5){cls='g';msg='Sigue: ya tienes 5 leads o más al 75% del máximo. Falta la venta.'}else{cls='r';msg='Apágalo: al 75% del máximo necesitabas 5 leads.'}}
+    else if(g>=max*.5){if(l>=3){cls='g';msg='Sigue: ya tienes 3 leads o más al 50% del máximo.'}else{cls='r';msg='Apágalo: al 50% del máximo necesitabas 3 leads.'}}
+    else{cls='n';msg='Todavía es pronto: sigue hasta el 50% del máximo ('+fmt(max*.5)+') y mira si hay 3 leads.'}
+    const e=document.getElementById('mt-v');e.className='verdict '+cls;e.textContent=msg;
+  }
+  if(document.getElementById('fn-precio')){
+    const p=num('fn-precio'),c=num('fn-costo'),f=num('fn-flete'),o=num('fn-otros')/100,cpa=num('fn-cpa'),d=Math.min(Math.max(num('fn-dev')/100,0),1),n=num('fn-ped');
+    const ent=p-c-f-p*o;const antes=(1-d)*ent-d*f;const u=antes-cpa;
+    setT('fn-uped',fmt(u));setT('fn-umes',fmt(u*n));setT('fn-ing',fmt(p*(1-d)*n));
+    const inc=p*(1-d)*n;setT('fn-mar',inc?((u*n)/inc*100).toFixed(1)+'%':'-');setT('fn-eq',fmt(Math.max(antes,0)));
+    const e=document.getElementById('fn-v');
+    if(u>0){e.className='verdict g';e.textContent='Con estas cifras ganas '+fmt(u)+' por pedido creado.'}
+    else{e.className='verdict r';e.textContent='Con estas cifras pierdes '+fmt(-u)+' por pedido. Baja el CPA, las devoluciones o sube el precio.'}
+  }
+  if(document.getElementById('of-out')){
+    const g=i=>(document.getElementById(i)||{}).value||'';
+    setT('of-out','Ayudo a '+g('of-a')+' a '+g('of-b')+' en '+g('of-c')+', con '+g('of-d')+'.');
+  }
+  if(document.getElementById('ai-out')){
+    const g=i=>(document.getElementById(i)||{}).value||'';
+    setT('ai-out',[g('ai-a'),g('ai-i'),g('ai-d'),g('ai-o')].filter(Boolean).join('\n\n'));
+  }
+  if(document.getElementById('rb-0')){
+    let s=0;for(let i=0;i<5;i++){const v=num('rb-'+i);s+=v;setT('rb-v'+i,v)}
+    setT('rb-t',s+' / 20');const e=document.getElementById('rb-m');
+    e.className='verdict '+(s>=16?'g':s>=10?'w':'r');
+    e.textContent=s>=16?'Proyecto sólido: listo para presentar y escalar.':s>=10?'Buen avance: refuerza los puntos con menos puntaje antes de presentar.':'Aún falta base: vuelve a los módulos de los criterios más bajos.';
+  }
+}
+function funnelShow(i){
+  const el=document.getElementById('fun-data');if(!el)return;
+  const S=JSON.parse(el.textContent),s=S[i];
+  document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',+b.dataset.f===i));
+  document.getElementById('fun-d').innerHTML=`<div class="grid3"><div class="card"><h3>Pregunta</h3><b>${esc(s[1])}</b></div><div class="card"><h3>Métrica</h3><b>${esc(s[2])}</b></div><div class="card hl"><h3>Si falla</h3><b>${esc(s[3])}</b></div></div>`;
+}
+function render(id){
+  if(!ORDER.includes(id))id='inicio';
+  uid=0;
+  $('#view').innerHTML=id==='inicio'?viewHome():id==='beneficios'?viewBenefits():viewMod(id);
+  const i=ORDER.indexOf(id),prev=ORDER[i-1],next=ORDER[i+1];
+  $('#view').insertAdjacentHTML('beforeend',`<div class="pager">${prev?`<button class="btn" data-go="${prev}">← ${esc(TITLES[prev])}</button>`:'<span></span>'}${next?`<button class="btn p" data-go="${next}">${esc(TITLES[next])} →</button>`:'<span></span>'}</div>`);
+  $('#crumb').innerHTML=id==='inicio'?'<b>Marketing digital en acción</b>':`<b>${MOD[id]?'Módulo '+N[id]:'Cierre'}</b> · ${esc(TITLES[id])}`;
+  document.title=(id==='inicio'?'':TITLES[id]+' · ')+'Leonel Mercado · Contenido Marketing a la Acción';
+  paintNav(id);calcAll();funnelShow(0);
+  $('#main').scrollTop=0;document.body.classList.remove('open');
+  CUR=id;
+}
+let CUR='inicio';
+function go(id){if(location.hash!=='#'+id)location.hash=id;else render(id)}
+
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-go],[data-tab],[data-copy],[data-seen],[data-f]');if(!t)return;
+  if(t.dataset.go){go(t.dataset.go)}
+  else if(t.dataset.tab){const[g,i]=t.dataset.tab.split(':');const box=t.closest('.tabs');
+    box.querySelectorAll('.tb button').forEach(b=>b.classList.toggle('on',b===t));
+    box.querySelectorAll('.pn').forEach(p=>p.classList.toggle('on',p.dataset.pn===g+':'+i));}
+  else if(t.dataset.copy){const el=document.getElementById(t.dataset.copy),txt=el.textContent;
+    const done=()=>{const o=t.textContent;t.textContent='¡Copiado!';setTimeout(()=>t.textContent=o,1400)};
+    try{navigator.clipboard.writeText(txt).then(done,()=>{sel(el);t.textContent='Selecciona y copia (Ctrl+C)'})}catch(err){sel(el);t.textContent='Selecciona y copia (Ctrl+C)'}}
+  else if(t.dataset.seen){const id=t.dataset.seen;if(seen[id])delete seen[id];else seen[id]=1;save();render(id)}
+  else if(t.dataset.f!==undefined){funnelShow(+t.dataset.f)}
+});
+function sel(el){try{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}catch(e){}}
+document.addEventListener('input',calcAll);
+window.addEventListener('hashchange',()=>render(location.hash.slice(1)||'inicio'));
+document.addEventListener('keydown',e=>{
+  if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  const i=ORDER.indexOf(CUR);
+  if(e.key==='ArrowRight'&&ORDER[i+1])go(ORDER[i+1]);
+  if(e.key==='ArrowLeft'&&ORDER[i-1])go(ORDER[i-1]);
+});
+$('#menu').addEventListener('click',()=>document.body.classList.toggle('open'));
+$('#present').addEventListener('click',()=>{
+  const on=document.body.classList.toggle('present');
+  $('#present').textContent=on?'Salir':'Presentar';
+  try{if(on&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{});else if(!on&&document.fullscreenElement)document.exitFullscreen().catch(()=>{})}catch(e){}
+});
+buildNav();render(location.hash.slice(1)||'inicio');
+(function(){
+  const sp=$('#splash');
+  let ya=false;try{ya=sessionStorage.getItem('entro')==='1'}catch(e){}
+  if(ya){sp.style.transition='none';sp.classList.add('out');void sp.offsetHeight;sp.style.transition=''}
+  function entrar(){
+    sp.classList.add('out');document.body.classList.remove('open');
+    try{sessionStorage.setItem('entro','1')}catch(e){}
+  }
+  function volver(){
+    sp.classList.remove('out');
+    try{sessionStorage.removeItem('entro')}catch(e){}
+    setTimeout(()=>$('#enter').focus(),50);
+  }
+  $('#enter').addEventListener('click',entrar);
+  $('#home-brand').addEventListener('click',volver);
+  if(!ya)$('#enter').focus();
+})();
+</script>
+</body>
+</html>
