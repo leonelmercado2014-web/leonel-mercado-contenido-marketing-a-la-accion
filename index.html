@@ -211,6 +211,9 @@ body.present .menu{display:none}
 #reg .chk{flex-direction:row;align-items:flex-start;gap:8px;font-weight:500;color:var(--mut);font-size:12.5px}
 #reg .chk input{margin-top:3px;accent-color:var(--y)}
 #reg .err{color:var(--bad);font-size:13px;min-height:16px}
+.gal{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 12px;scroll-snap-type:x mandatory}
+.gal a{flex:none;scroll-snap-align:start;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#0A0A0A;display:block}
+.gal img{display:block;height:min(460px,70vh);width:auto}
 </style>
 </head>
 <body>
@@ -322,7 +325,8 @@ const MOD={
     {t:'D · Dolor',h:'Dolor: qué tan grande es el problema',p:'Qué tan grande es el problema por categoría (escala de 1 a 10):\nSalud y belleza: 10\nBienestar: 9\nHogar: 5\nCocina: 2\n\nEjemplo de dolor alto: el nervio ciático, que quita el sueño y hasta el caminar.\nEjemplo de dolor bajo: una espátula; nadie se estresa por voltear un huevo.\n\nEl dolor es la magnitud del problema que resuelves. Entre más grande, más probabilidad de que el producto funcione.\nTip: pregúntate: ¿alguien pagaría hoy por quitarse este problema?',tags:[['Filtro 1','g']]},
     {t:'V · Valor',h:'Valor: que se perciba caro',p:'Un producto de $90.000 (USD 29) que parece una cosita genera la pregunta "¿tanto por esta cosita?". El mismo precio en un producto que se nota que lo vale sí se vende.\n\nEl valor percibido es lo que la gente cree que vale en el anuncio frente a lo que ve que cuesta en la página.\nLo que más lo sube es el tamaño y que no se consiga fácil en una tienda.\nTip: los productos pequeños y fáciles de encontrar en cualquier tienda casi nunca justifican un precio alto.',tags:[['Filtro 2','w']]},
     {t:'C · Competencia',h:'Competencia: que no esté saturado',p:'Hay un techo: 500 ventas en 7 días, o 3.000 ventas en total. Si pasa cualquiera de los dos, lo sueltas ("saturado"); si está por debajo, todavía cabes.\n\nRevísalo en Dropkiller, sumando a todos los proveedores de ese producto.\nMeta y TikTok funcionan como subasta: quien invierte $3.100.000 (USD 1.000) al día le gana a tus $100.000 (USD 32,3).',tags:[['Filtro 3','w']]},
-    {t:'El método',h:'Testear es preguntarle al mercado: ¿lo comprarías?',p:'Paso 1: monta la página del producto.\n(Siguientes pasos del método: por completar con el manual de testeo.)',tags:[['Manual de testeo','']]}]}]},
+    {t:'El método',h:'Testear es preguntarle al mercado: ¿lo comprarías?',p:'Paso 1: monta la página del producto.\n(Siguientes pasos del método: por completar con el manual de testeo.)',tags:[['Manual de testeo','']]}]},
+  {k:'gallery',title:'Manual de testeo en imágenes',imgs:['assets/testeo-1.png','assets/testeo-2.png','assets/testeo-3.png','assets/testeo-4.png','assets/testeo-5.png'],alts:['Antes de testear, pasa el producto por 3 filtros: Dolor, Valor y Competencia','Filtro D: Dolor, qué tan grande es el problema','Filtro V: Valor, que se perciba caro','Filtro C: Competencia, que no esté saturado','El método: testear es preguntarle al mercado, ¿lo comprarías?']}]},
  m3:{n:3,icon:'box',title:'Dropshipping con Dropi',goal:'Armar la cadena completa: producto, proveedor, venta y entrega, con márgenes reales.',
   learn:['Cómo funciona la logística con Dropi y el pago contra entrega','Cómo calcular el margen antes de anunciar','Criterios para elegir un producto ganador','Devoluciones y novedades: cómo cuidarte'],
   practice:'Elige 3 productos candidatos y calcula utilidad y CPA máximo de cada uno.',deliver:'Tabla con 3 productos: precio, costo, flete, utilidad y CPA máximo.',tools:['Dropi','Dropkiller','Calculadora de margen'],
@@ -506,10 +510,11 @@ function tabs(w){
   const pn=w.items.map((it,i)=>`<div class="pn ${i===0?'on':''}" data-pn="${id}:${i}"><h4>${esc(it.h||it.t)}</h4><p>${esc(it.p).replace(/\n/g,'<br>')}</p>${it.tags?`<div class="meta">${it.tags.map(t=>`<span class="tag ${t[1]}">${esc(t[0])}</span>`).join('')}</div>`:''}</div>`).join('');
   return `<div class="card tabs" data-g="${id}">${w.title?`<h3>${esc(w.title)}</h3>`:''}<div class="tb">${tb}</div>${pn}</div>`;
 }
+function gallery(w){return `<div class="card">${w.title?`<h3>${esc(w.title)}</h3>`:''}<div class="gal">${w.imgs.map((f,i)=>`<a href="${f}" target="_blank" rel="noopener"><img src="${f}" alt="${esc(w.alts[i]||'')}" loading="lazy"></a>`).join('')}</div><p style="color:var(--mut);font-size:13px">Desliza para ver todas. Toca una imagen para verla en grande.</p></div>`}
 function field(id,label,val,type='number',extra=''){return `<div class="field"><label for="${id}">${label}</label><input id="${id}" type="${type}" value="${val}" ${extra} inputmode="${type==='number'?'numeric':'text'}"></div>`}
 function out(id,label,big){return `<div class="out ${big?'big':''}"><span>${label}</span><b id="${id}">-</b></div>`}
 
-const W={
+const W={gallery,
  tabs,
  note:w=>`<p class="note">${esc(w.t)}</p>`,
  acc:w=>`<div>${w.items.map((a,i)=>`<details ${i===0?'open':''}><summary>${esc(a[0])}</summary><div class="d">${esc(a[1])}</div></details>`).join('')}</div>`,
