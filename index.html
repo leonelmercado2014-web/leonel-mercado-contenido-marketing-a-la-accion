@@ -214,6 +214,10 @@ body.present .menu{display:none}
 .gal{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 12px;scroll-snap-type:x mandatory}
 .gal a{flex:none;scroll-snap-align:start;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#0A0A0A;display:block}
 .gal img{display:block;height:min(460px,70vh);width:auto}
+#cele{position:fixed;right:18px;bottom:18px;z-index:250;display:flex;align-items:center;gap:12px;background:var(--panel);border:2px solid var(--y);border-radius:22px;padding:8px 18px 8px 8px;box-shadow:0 12px 40px #000a,0 0 30px #ffd70033;transform:translateY(30px) scale(.85);opacity:0;pointer-events:none;transition:transform .35s cubic-bezier(.2,1.4,.4,1),opacity .3s}
+#cele.on{transform:none;opacity:1}
+#cele img{width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:50% 25%;border:2px solid var(--y);background:#fff}
+#cele b{display:block;font-size:15px;color:var(--y)}#cele span{font-size:13px;color:var(--t)}
 </style>
 </head>
 <body>
@@ -226,6 +230,7 @@ body.present .menu{display:none}
     <div class="sp-s">Marketing digital en acción: de la idea al negocio lanzado</div>
   </div>
 </div>
+<div id="cele" role="status" aria-live="polite"><img src="assets/felicitacion.webp" alt=""><div><b>¡Módulo completado!</b><span>Sigue así, vas muy bien</span></div></div>
 <div id="reg" role="dialog" aria-label="Registro del estudiante"><form id="regf" novalidate>
 <h2>Antes de empezar</h2><p class="s">Regístrate para guardar tu avance en el curso.</p>
 <label>Nombre completo<input name="nombre" autocomplete="name" required></label>
@@ -660,7 +665,7 @@ document.addEventListener('click',e=>{
   else if(t.dataset.copy){const el=document.getElementById(t.dataset.copy),txt=el.textContent;
     const done=()=>{const o=t.textContent;t.textContent='¡Copiado!';setTimeout(()=>t.textContent=o,1400)};
     try{navigator.clipboard.writeText(txt).then(done,()=>{sel(el);t.textContent='Selecciona y copia (Ctrl+C)'})}catch(err){sel(el);t.textContent='Selecciona y copia (Ctrl+C)'}}
-  else if(t.dataset.seen){const id=t.dataset.seen;if(seen[id])delete seen[id];else seen[id]=1;save();render(id);enviarAvance(id)}
+  else if(t.dataset.seen){const id=t.dataset.seen;if(seen[id])delete seen[id];else seen[id]=1;save();render(id);enviarAvance(id);if(seen[id])celebrar()}
   else if(t.dataset.f!==undefined){funnelShow(+t.dataset.f)}
 });
 function sel(el){try{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}catch(e){}}
@@ -686,6 +691,7 @@ function enviar(tipo,datos){
   if(!SHEET_URL)return;
   try{fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({tipo,fecha:new Date().toISOString()},datos))}).catch(()=>{})}catch(e){}
 }
+let celeT;function celebrar(){const c=$('#cele');c.classList.add('on');clearTimeout(celeT);celeT=setTimeout(()=>c.classList.remove('on'),2800)}
 function enviarAvance(id){
   if(!reg)return;
   enviar('avance',{cedula:reg.cedula,nombre:reg.nombre,modulo:TITLES[id]||id,visto:!!seen[id],pct:$('#pct').textContent});
